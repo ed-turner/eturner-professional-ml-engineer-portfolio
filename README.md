@@ -99,17 +99,51 @@ emp_sdf = emp_sdf.withColumn("age1", F.col("age") + F.lit(1))
 
 ```
 
+One encouragement when performing purely columnar operations, especially when using sklearn or spark, is to use a Transformer object and add those into a pipeline object.  The rationale here is to enable proper A/B testing throughout the entire pipeline end to end.  
+
+Here is an example of a sklearn standard feature engineering pipeline using Transformers:
+
+``` python 
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import FeatureUnion
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import KBinsDiscretizer
+
+ct1 = ColumnTransformer(
+  [ ("bucket", KBinsDiscretizer(), ["income", "age"]) ],
+  )
+  
+ct2 = ColumnTransformer(
+  [ ("onehot", OneHotEncoder(), ["deptno", "gender"]) ],
+  remainder="passthrough"
+  )
+
+union = FeatureUnion([("numeric", ct1), ("ordinal", ct2)])
+
+pipe = Pipeline([('sparse_features', union), ('standizer', StandardScaler())])
+
+pipe.fit(df)
+
+```
+
+For incrementation feature engineering tasks, please consider using `sklearn.preprocessing.FunctionTransformer`.
+
+One benefit, even if you deploying using a Spark pipeline, the feature engineering pipelines can be loaded into a `pyspark.sql.functions.pands_udf`.  
+This will allow a scalable feature engineering pipeline, even if it wasn't developed using spark first.  
+
+
 ## Model Architectures
 
 ### Tensorflow Model
 
-The `tf-mle` folder will have the example of how I would deploy a tensorflow model.  Any subclass of `tf.keras.models.Model` and `tf.keras.models.Sequential` model can be deploy using the method described in this section.  The main deployment method is to use Kubernetes to deploy specific `tensorflow/serving` web services, which will specify a particular tensorflow model.
+The `examples/tf-mle` folder will have the example of how I would deploy a tensorflow model.  Any subclass of `tf.keras.models.Model` and `tf.keras.models.Sequential` model can be deploy using the method described in this section.  The main deployment method is to use Kubernetes to deploy specific `tensorflow/serving` web services, which will specify a particular tensorflow model.
 
 We will also cover how to automate hyperparameter tuning in a way that will save the parameters.
 
 ### Scikit-Learn Model
 
-The `mlflow-mle` folder will have the example of how I would deploy a scikit-learn model.
+The `examples/mlflow-mle` folder will have the example of how I would deploy a scikit-learn model.
 
 
 ## Model Learning Development Flow

@@ -1,0 +1,10 @@
+apiVersion: v1
+configMapGenerator:
+    - name: example-configmap-1
+      envs:
+          - .env
+resources:
+    - deployment.yaml
+    - service.yaml
+
+

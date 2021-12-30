@@ -2,14 +2,14 @@
 apiVersion: apps/v1
 kind: Service
 metadata:
-  name: tensorflow-service
+  name: tensorflow-app
   labels:
-    run: tensorflow-service
+    run: tensorflow-app
 spec:
   ports:
     - port: 5050
       targetPort: 8501
   selector:
-    run: tensorflow-service
+    run: tensorflow-app
   
 -------------------

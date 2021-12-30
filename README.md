@@ -166,7 +166,7 @@ st[Start] --> rowop[Row Altering Operation]
 
 ```
 
-The following will be a suggestion for how I would deploy a **stable** ML Infernce Pipeline
+The following will be a suggestion for how I would deploy a **stable** ML Inference Pipeline
 
 ```mermaid
 graph LR
@@ -177,4 +177,7 @@ st[Start] --> rowop[Row Altering Operation]
   modelinference --> e[End]
   
 ```
+
+The Machine Learning Model Inference box is flexible to batch solutions and streaming solutions.  We are going to focus more on how to utilize REST APIs, which can be used in both batch and streaming.
+
 

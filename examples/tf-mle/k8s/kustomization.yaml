@@ -3,8 +3,8 @@ kind: Kustomization
 configMapGenerator:
     - name: configmap
       files:
-        - metrics.config
-        - batch.config
+        - ./config/metrics.config
+        - ./config/batch.config
       namespace: "tensorflow"
 resources:
     - deployment.yaml

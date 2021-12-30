@@ -2,6 +2,7 @@
 apiVersion: apps/v1
 kind: Service
 metadata:
+  namespace: tensorflow-serving
   name: tensorflow-app
   labels:
     run: tensorflow-app
@@ -11,5 +12,21 @@ spec:
       targetPort: 8501
   selector:
     run: tensorflow-app
-  
 -------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service
+  namespace: tensorflow-serving
+  annotations:
+      prometheus.io/scrape: 'true'
+      prometheus.io/port:   '9090'
+  
+spec:
+  selector: 
+    app: prometheus-server
+  type: NodePort  
+  ports:
+    - port: 8080
+      targetPort: 9090 
+      nodePort: 30000

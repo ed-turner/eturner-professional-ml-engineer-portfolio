@@ -143,10 +143,31 @@ We will also cover how to automate hyperparameter tuning in a way that will save
 
 ### Scikit-Learn Model
 
-The `examples/mlflow-mle` folder will have the example of how I would deploy a scikit-learn model.
+The `examples/mlflow-mle` folder will have the example of how I would deploy a scikit-learn model, or any model that was subclassing `sklearn.base.BaseEstimator`.  The main deployment method is to use Kubernetes to deploy a specific `mlflow` web service, which will specify a particular sklearn model.  
 
+We will also cover how to automate the hyperparameter tuning using Bayesian Optimiztion.  
 
-## Model Learning Development Flow
+## Machine Learning Pipeline Flow
 
-TODO
+The Machine Learning Pipeline Flow is a very opininated space, where there are general disagreements for how to properly develop a Data Science methodology without committing a large amount of efforts into software development that might not be used among further discovery, and then how to scale accordingly.  
+
+To see these diagrams as expected, download: https://chrome.google.com/webstore/detail/github-%2B-mermaid/goiiopgdnkogdbjmncgedmgpoajilohe/related and use Google Chrome. 
+
+The following will be a suggestion for how I would deploy a **stable** ML Training Pipeline
+
+```mermaid
+graph LR
+
+st[Start]-->rowop[Row Altering Operation]-->trainvaltest[Train/Val/Test Split Operation]-->colop[Columnar Operation]-->modeltraining[Machine Learning Model Training]-->e[End]
+
+```
+
+The following will be a suggestion for how I would deploy a **stable** ML Infernce Pipeline
+
+```mermaid
+graph LR
+
+st[Start]-->rowop[Row Altering Operation]-->colop[Columnar Operation]-->modelinference[Machine Learning Model Inference]-->e[End]
+
+```
 

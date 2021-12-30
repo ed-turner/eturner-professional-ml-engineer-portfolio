@@ -158,7 +158,11 @@ The following will be a suggestion for how I would deploy a **stable** ML Traini
 ```mermaid
 graph LR
 
-st[Start]-->rowop[Row Altering Operation]-->trainvaltest[Train/Val/Test Split Operation]-->colop[Columnar Operation]-->modeltraining[Machine Learning Model Training]-->e[End]
+st[Start] --> rowop[Row Altering Operation]
+  rowop --> trainvaltest[Train/Val/Test Split Operation] 
+  trainvaltest --> colop[Columnar Operation]
+  colop --> modeltraining[Machine Learning Model Training]
+  modeltraining --> e[End]
 
 ```
 
@@ -167,7 +171,10 @@ The following will be a suggestion for how I would deploy a **stable** ML Infern
 ```mermaid
 graph LR
 
-st[Start]-->rowop[Row Altering Operation]-->colop[Columnar Operation]-->modelinference[Machine Learning Model Inference]-->e[End]
-
+st[Start] --> rowop[Row Altering Operation]
+  rowop --> colop[Columnar Operation] 
+  colop --> modelinference[Machine Learning Model Inference]
+  modelinference --> e[End]
+  
 ```
 

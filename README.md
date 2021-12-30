@@ -116,7 +116,6 @@ ct1 = ColumnTransformer(
   
 ct2 = ColumnTransformer(
   [ ("onehot", OneHotEncoder(), ["deptno", "gender"]) ],
-  remainder="passthrough"
   )
 
 union = FeatureUnion([("numeric", ct1), ("ordinal", ct2)])
